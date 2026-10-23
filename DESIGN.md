@@ -4,7 +4,8 @@ Rewritten 2026-10-23. The first draft (archive ingestion, nightly
 gatherers) misread the product. This version is built from the owner's own
 walkthroughs.
 
-Status: Phase 0 (design).
+Status: Phase 0 (design). The buildable spec for the MVP is
+[`SPEC.md`](SPEC.md).
 
 ---
 

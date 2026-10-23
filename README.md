@@ -3,7 +3,8 @@
 Turns the AI agent you already talk to into a reading companion. If you
 want, it also holds you and a reading partner to each other.
 
-**Status:** Phase 0, design. No code yet. See [`DESIGN.md`](DESIGN.md).
+**Status:** Phase 0 spec drafted ([`SPEC.md`](SPEC.md)). No code yet.
+Design and roadmap: [`DESIGN.md`](DESIGN.md).
 
 ## What it does
 

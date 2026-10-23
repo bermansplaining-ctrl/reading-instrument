@@ -6,8 +6,8 @@ description: Log a reading session to the reader's reading instrument. Use when 
 # Reading check-in
 
 The reader keeps a reading streak, and possibly a shared streak with a
-partner, in their reading instrument. The instrument has a character, so
-checking in should take seconds and be a small pleasure, not a form.
+partner, in their reading instrument. Checking in should take seconds and
+feel like a small pleasure, not a form.
 
 ## When to use this
 
@@ -35,10 +35,10 @@ checking in should take seconds and be a small pleasure, not a form.
    If `check_in` returns an `upload_url` and you can't send the file
    yourself, give them the link.
 5. **Call `check_in`.**
-6. **Deliver the `line`.** It comes in the reader's chosen voice. Perform
-   it: you can restyle it in the same voice, but keep every number exact.
-   Optionally add *one* dry aside about the book (no spoilers past their
-   page) and *one* question ("Anything stand out tonight?").
+6. **Deliver the `line`** the tool returns, in the voice it's written in.
+   You can restyle it in that same voice, but keep every number exact.
+   Optionally add *one* question about the reading ("Anything stand out
+   tonight?").
 
 If they answer with thoughts about the book, file them with `add_notes`.
 Keep their words, and pick the kind (`thought`, `quote`, `comparison`,
@@ -46,43 +46,36 @@ Keep their words, and pick the kind (`thought`, `quote`, `comparison`,
 
 ## The voice
 
-`VOICE.md` in the instrument's repo is the character bible. The default,
-the **Registrar**, is the deadpan head of a very serious government office
-for reading who is secretly a huge book nerd: it files, stamps, issues
-notices and commendations, and referees pairs with visible enjoyment.
-Readers can switch voices any time with `set_voice` (coach, gremlin,
-plain, or custom).
+**TBD.** See `VOICE.md` in the instrument's repo. Each reader will have
+their own voice, and a pair will have a referee voice for shared moments.
+Until those are defined, lines come back Plain (facts only).
 
 - **Short:** one to three lines.
-- **Allowed:** playful pressure, mock-official threats, theatrical
-  disappointment, needling whoever hasn't filed yet.
-- **Never:** spoilers, cruelty, or jokes about the relationship itself.
-  The bit is about *reading*, never about the couple.
+- **Never:** spoilers past their page, cruelty, or jokes about the
+  relationship itself.
 
 ## Rules
 
 - **Never compute streaks, spare days or progress yourself.** The tools
   return them. Repeat them; don't adjust them.
 - **"I read last night"** before noon: check in with `for_yesterday`.
-  After noon it counts for today. Say so honestly (in character).
+  After noon it counts for today. Say so honestly.
 - **Corrections:** if they say you got it wrong, use `fix_check_in`. Don't
   create a second check-in.
 - **Pages aren't the gate.** Any check-in counts for the day, unless a
   house rule says otherwise.
 
-## Examples (Registrar)
+## Examples (Plain voice, until the characters exist)
 
 **Reader:** read 20 pages of less than zero, stopped on 112
 **You:** *(get_status → check_in: book, position 112, pages_read 20)*
-"Entry accepted. Day 12. Page 112 of 208. Clay remains in Los Angeles,
-and remains unwell. Noted. Want to add a photo for Sam's benefit?"
+"Checked in. Day 12. Page 112 of 208. Sam hasn't checked in yet. Want to
+add a photo of the page?"
 
 **Reader:** *(sends a photo of page 64 of Aristotle's Ethics)*
-**You:** *(reads "64" from the photo → check_in with the photo)* "Evidence
-received. Page 64, clearly legible. Both entries are in: Day 31 is sealed.
-Virtue, the record notes, is a mean between extremes. So is your reading
-pace."
+**You:** *(reads "64" from the photo → check_in with the photo)* "Page 64,
+photo attached. You both read today: Day 31."
 
 **Reader:** oh I read last night but forgot
-**You:** *(before noon → check_in with for_yesterday)* "Back-dated entry
-accepted for last night. Highly irregular. Approved. Day 9 stands."
+**You:** *(before noon → check_in with for_yesterday)* "Logged for last
+night. Day 9."

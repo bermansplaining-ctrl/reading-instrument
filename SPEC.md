@@ -102,10 +102,10 @@ drives the recovery copy.
 ### 2.6 Day states and the `line`
 
 The core returns a machine-readable `state` plus a `line`: the moment
-written in the reader's chosen voice, with the numbers filled in. The
-instrument has a character. **`VOICE.md` is the source for every line**,
-and the agent performs it (it may restyle the line but must keep the
-numbers).
+written in the right voice (the reader's own, or the pair's referee for
+shared moments), with the numbers filled in. **`VOICE.md` is the source for
+every line** (characters TBD; Plain until then), and the agent performs it
+(it may restyle the line but must keep the numbers).
 
 States: `neither`, `me_done`, `partner_done`, `both_done`, `solo_done`,
 `solo_open`, plus the events `recovered` (yesterday covered by a spare),
@@ -142,14 +142,14 @@ first migration.
 
 | Table | Columns | Notes |
 |---|---|---|
-| `readers` | id, display_name, timezone, email?, voice (`registrar`, `coach`, `gremlin`, `plain`, `custom`), voice_custom?, created_at, deleted_at | Not tied to Supabase Auth in the MVP. Agents authenticate with keys |
+| `readers` | id, display_name, timezone, email?, voice (`plain`, `custom`, plus the characters once defined), voice_custom?, created_at, deleted_at | Not tied to Supabase Auth in the MVP. Agents authenticate with keys. Voices: VOICE.md (TBD) |
 | `api_keys` | id, reader_id, label (`muse`, `chatgpt`, `terminal`…), key_hash, prefix, created_at, last_used_at, revoked_at | One key per agent per reader. Only the hash is stored |
 | `books` | id, open_library_key?, title, author, year?, page_count?, cover_url?, created_at | Shared catalog, deduplicated by Open Library key |
 | `shelf_entries` | reader_id, book_id, status (`reading`, `finished`, `paused`, `abandoned`, `want`), format (`print`, `ebook`, `audio`), position?, position_unit (`page`, `percent`, `minute`, `chapter`), page_count_override?, started_on?, finished_on?, rating? (0.5–5 in half stars), favorite, updated_at | Progress is format-aware, so audiobooks work |
 | `checkins` | id, reader_id, book_id?, created_at, for_yesterday, position?, position_unit?, pages_read?, minutes?, note?, photo_id?, source (key label), deleted_at | The gate. Days are derived, not stored |
 | `photos` | id, reader_id, checkin_id, storage_path, mime, bytes, width, height, status (`pending`, `ready`), created_at, deleted_at | Stored with location data stripped (§4) |
 | `notes` | id, reader_id, book_id, checkin_id?, kind (`thought`, `quote`, `comparison`, `vibe`, `question`, `summary`), body, page?, source (`conversation`, `ingested`), source_ref?, created_at, deleted_at | Private to the reader in the MVP |
-| `pairs` | id, invite_code (6 chars, no look-alike characters), timezone, created_by, created_at, ended_at | |
+| `pairs` | id, invite_code (6 chars, no look-alike characters), timezone, referee_voice, created_by, created_at, ended_at | The referee voice speaks for shared moments (VOICE.md §2) |
 | `pair_members` | pair_id, reader_id, joined_at, left_at | Max 2, enforced with a row lock on join (T11) |
 | `rules` | id, scope (`reader` or `pair`), scope_id, rule (`photo_required`, `min_minutes`, `min_pages`), value?, proposed_by, seconded_by?, effective_from, retired_from? | Versioned. Each day is judged by the rules in effect that day (§2.7) |
 | `lines_shown` | reader_id, moment, variant, shown_on | So the same line never repeats two days running (VOICE.md §5) |
@@ -213,9 +213,9 @@ their own**. Draft:
 > place in each book, their notes, and (if paired) a shared streak with
 > their partner. When they mention reading, call `get_status`. When they
 > say they read, call `check_in` and ask for a photo of the page they
-> stopped on. Never compute streaks yourself. Speak as the Instrument, in
-> the reader's chosen voice, using the `line` each tool returns: brief,
-> lively, numbers exact, never cruel, never a spoiler.
+> stopped on. Never compute streaks yourself. Deliver the `line` each tool
+> returns, in the voice it's written in: brief, numbers exact, never cruel,
+> never a spoiler.
 
 The full `skills/checkin/SKILL.md` follows that paragraph.
 
@@ -234,7 +234,7 @@ The full `skills/checkin/SKILL.md` follows that paragraph.
 | `pair_invite` | "Invite someone to read with me" | — | Code, join link, QR image URL |
 | `pair_join` | The reader has a code | `code` | Pair status, including the partner's name |
 | `set_reminder` | "Remind me at 9" | `time` (HH:MM), `channel` (`agent`, `email` or `off`) | Stored setting, plus the exact daily task for the agent to create in its own scheduler |
-| `set_voice` | "Talk to me like a coach" / "be a noir detective" | `voice` (`registrar`, `coach`, `gremlin`, `plain` or `custom`), `description?` (for custom) | The new voice, demonstrated in one line |
+| `set_voice` | "Talk to me like a noir detective" / "just the facts" | `voice` (`plain`, `custom`, or a defined character), `description?` (for custom), `scope` (`me`, or `referee` for the pair) | The new voice, demonstrated in one line |
 | `propose_rule` | "Let's make photos required" / "20 minutes minimum" | `rule`, `value?`, `scope` (`me` or `pair`) | Solo: active from tomorrow. Pair: pending until the partner seconds it |
 | `answer_rule` | The partner responds to a proposed rule | `rule_id`, `accept` (yes or no) | The rule's status and when it takes effect |
 
@@ -349,12 +349,12 @@ Decided 2026-10-23:
 - **House rules:** photo suggested by default; photo-required and minimums
   available (§2.7).
 - Ratings in **half stars**.
-- **The voice has a character** (`VOICE.md`), replacing Build #1's calm
-  tone.
+- **The voice needs character**, replacing Build #1's calm tone. The first
+  draft character (the Registrar) was rejected.
+- **A referee voice** speaks for pair moments, separate from each person's
+  own voice.
 
 Open:
 
-1. Is the Registrar the right default character, or should the first
-   check-in let each reader pick a voice?
-2. Should a pair be able to set one shared voice for pair moments (the
-   referee), separate from each person's own?
+1. **The characters themselves:** each reader's default voice and the
+   referee voice. TBD (`VOICE.md`).

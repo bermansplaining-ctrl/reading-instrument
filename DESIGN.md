@@ -141,6 +141,12 @@ the core is hosted from the MVP onward.
 | **The user** (self-host) | Their own small server | Omarchy folks who want cloud agents or pairing without depending on us. Optional |
 | **Us** (hosted) | Connect your agent with a URL and a key. Nothing to install | Everyone else. The public version, and the eventual paid tier |
 
+These map onto how people already use AI. **Local** is like running your
+own model on your own hardware. **Self-hosted** is like renting API access
+and wiring it up yourself. **Hosted** is the low-maintenance frontier
+experience, like just using ChatGPT, Grok or Claude. Same instrument, three
+levels of control.
+
 For the MVP, "us" means one small hosted backend the owner runs for two
 people, most likely a Supabase project on the free tier (see §8).
 

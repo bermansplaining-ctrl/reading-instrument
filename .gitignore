@@ -1,0 +1,5 @@
+# Personal reading data never goes in this repo.
+inbox/
+record/
+*.local.md
+.env

@@ -24,6 +24,8 @@ Design and roadmap: [`DESIGN.md`](DESIGN.md).
 3. **Numbers are computed, words are generated.**
 4. **Solo works. Paired is better.**
 5. **You own the record**, and it works with any agent.
+6. **It has character.** A voice you'd miss, not copy you skip. See
+   [`VOICE.md`](VOICE.md).
 
 ## Lineage
 

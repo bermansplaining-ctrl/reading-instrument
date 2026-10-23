@@ -19,8 +19,9 @@ path.
   being blogged.
 - **Build #1 for reference:** the `SharedReadingApp` repo (clone it next to
   this one as `../bound`). An Expo + Supabase app, shelved. Reuse its rules
-  and copy voice (`README.md` "The streak", `lib/pactState.ts`,
-  `lib/streak.ts`), not its architecture.
+  (`README.md` "The streak", `supabase/migrations/0019_streak_fixes.sql`),
+  not its architecture and **not its voice**. Its calm, polite copy was
+  replaced on purpose; see `VOICE.md`.
 
 ## Rules
 
@@ -36,5 +37,7 @@ path.
   web, phone widgets).
 - **Numbers are computed, words are generated.** An LLM never counts a
   streak or adds up stats. The core does.
+- **It has character.** Every user-facing line follows `VOICE.md`: lively
+  and specific, never bland, polite filler.
 - **Working style:** push back honestly and verify claims (search before
   asserting). The owner asked for this during ideation.

@@ -14,9 +14,8 @@ path.
 
 ## Context
 
-- **Build log and blog draft:** `blog/2026-10-22-blog-notes.md`. Add a
-  dated entry to its "Process log" each working session; this project is
-  being blogged.
+- **Blogged, but not from here.** This build is written up on the owner's
+  blog. Build notes and blog drafts never go in this repo.
 - **Build #1 for reference:** the `SharedReadingApp` repo (clone it next to
   this one as `../bound`). An Expo + Supabase app, shelved. Reuse its rules
   (`README.md` "The streak", `supabase/migrations/0019_streak_fixes.sql`),
@@ -26,9 +25,8 @@ path.
 ## Rules
 
 - **Private now, public later.** Keep personal details (names, devices,
-  anyone's actual reading notes) out of tracked files, except `blog/`,
-  which holds raw build notes. Review `blog/` before the repo goes public.
-  Real reading data never lives in the repo.
+  anyone's actual reading notes) out of tracked files. Real reading data
+  never lives in the repo.
 - **The product** is the agent as a daily reading companion (nudge → read
   → check in → notes → feedback), with pairing on top. It is not a
   data-archive tool. Backfilling old notes is an optional skill.
